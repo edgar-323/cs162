@@ -1,0 +1,12 @@
+CHILD THREAD
+CHILD: close(filedes[1]);
+CHILD: close(filedes[0]);
+CHILD: calling execv()...
+CHILD THREAD
+CHILD: close(filedes[1]);
+CHILD: close(filedes[0]);
+CHILD: calling execv()...
+CHILD THREAD
+CHILD: close(filedes[1]);
+CHILD: close(filedes[0]);
+CHILD: calling execv()...
