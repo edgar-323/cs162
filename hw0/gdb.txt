@@ -1,0 +1,30 @@
+t is the value of argv? (hint: print argv)
+   argv = 0x7fffffffe628
+   We see that the value of argv (which is a double char pointer) is the address
+   of where the first string (or char pointer) of argv is located.
+
+2. What is pointed to by argv? (hint: print argv[0])
+   We see that the value of argv (which is a double char pointer) is the address
+   of where the first string (or char pointer) of argv is located.
+   The first string of argv is argv[0] which has itself points to the location (0x7fffffffe84a)
+   where the string /home/vagrant/code/personal/hw0/wc" is located.
+
+3. What is the address of the function main?
+   0x40069d <main(int, char**)>:   0x30ec8348e5894855
+   The address of where the code for the main() procedure is stored is 0x40069d.
+
+4. Try info stack. Explain what you see.
+   #0  main (argc=2, argv=0x7fffffffe628) at wc.c:10
+   It seems that 'info stack' gives you a summary of the function that you are currently
+   "inside" of. I believe "#0" can be referring to the stack level (main() is at level zero)
+   and it also gives you the state of the function parameters.
+
+5. Try info frame. Explain what you see.
+   This gives us a much more verbose version of the current procedure stack.
+   For example, we are given the address of the argument list (where the parameter values live),
+   the level of depth (0 in the case of main()), where the local variables live, the stack pointer
+   value, the language used to write our code, and the saved registers.
+
+6. Try info registers. Which registers are holding aspects of the program that you recognize?
+   rsi is holding the value of argv, rdi is holding value of argc, rip is holding the address of main.
+

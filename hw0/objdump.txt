@@ -1,0 +1,21 @@
+t file format is used for this binary? And what architecture is it compiled for?
+   file format is elf64-x86-64
+   architecture is i386:x86-64
+
+2. What are some of the names of segment/sections you find?
+   "wc", "architecture", "Program Header", "Dynamic Section",
+   "Version References", "Sections", "SYMBOL TABLE",
+   "Disassembly of section .init", "Disassembly of section .plt",
+   "Disassembly of section .text", "Disassembly of section .fini"
+
+
+3. What segment/section contains main (the function) and what is the address of main?
+   There seems to be a lot of references to main throughout the file, however,
+   in segment "Disassembly of section .text:" there exists the section "000000000040069d <main>:"
+   which contains the assembly code for main(). Also the address 000000000040069d matches
+   0x40069d, which we stated in gdb.txt.
+
+4. Do you see the stack segment anywhere? What about the heap? Explain.
+   No. They don't seem to appear in the this info.
+   This makes sense, though, since stack/heap info is produced at runtime.
+

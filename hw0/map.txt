@@ -1,0 +1,80 @@
+e objdump with the -D flag on the map executable. Which of the addresses from the output of
+   running ./map are defined in the executable, and which segment/section is each defined in?
+   0x4005c2 --> "Disassembly of section .text" / "00000000004005c2 <main>"
+   0x40057d --> "Disassembly of section .text" / "000000000040057d <_Z5recuri>"
+   0x601048 --> "Disassembly of section .got.plt" / "0000000000601048 <stuff>"
+
+2. Make a list of the important segments, and what they are used for (look up their names on the
+   Internet if you don’t know).
+   .interp --> Path name of program interpreter
+   .note.ABI-tag --> Contains notes about info of special fields in ELF
+   .note.gnu.build-id --> Hash code that is used to make sure that a binary build is consistent
+   .gnu.hash --> another hash for the binary
+   .dynsym --> Holds the DYNAMIC LINKING symbol table
+   .dynstr --> Strings required for dynamic linking
+   .gnu.version --> symbol table version information
+   .gnu.version_r --> version definitions
+   .rela.dyn --> Runtime/Dynamic relocation table.
+                For dynamic binaries, this relocation table holds information of
+                variables which must be relocated upon loading.
+   .rela.plt --> Runtime/Dynamic relocation table.
+                 This relocation table is similar to the one in .rela.dyn section;
+                 the difference is this one is for functions, not variables.
+   .init --> holds executable instructions that contribute to the process initialization code.
+             When a program starts to run, the system arranges to execute the code in this section
+             before calling the main program entry point (called main for C programs)
+   .plt --> This section holds the read-only portion of the GLobal Offset Table.
+            This section may be made read-only after relocations have been applied.
+   .text --> holds the executable instructions, of a program.
+   .fini --> This section holds executable instructions that contribute to the process
+             termination code. That is, when a program exits normally, the system
+             arranges to execute the code in this section.
+   .rodata --> This section holds read-only data that typically contribute to a
+               non-writable segment in the process image.
+   .eh_frame_hdr --> This section contains a pointer to the .eh_frame section which is
+                     accessible to the runtime support code of a C++ application.
+                     This section may also contain a binary search table which may
+                     be used by the runtime support code to more efficiently access
+                     records in the .eh_frame section.
+   .eh_frame --> This section contains information necessary for frame unwinding
+                 during exception handling (eh).
+   .init_array --> This section holds an array of function pointers that contributes
+                   to a single initialization array for the executable or shared
+                   object containing the section.
+   .fini_array --> This section holds an array of function pointers that contributes
+                   to a single termination array for the executable or shared object
+                   containing the section.
+   .jcr --> This section contains information necessary for registering compiled Java classes.
+            The contents are compiler-specific and used by compiler initialization functions.
+   .dynamic --> This section holds dynamic linking information.
+   .got --> Global Offset Table (GOT).
+   got.plt --> This section holds the read-only portion of the GLobal Offset Table.
+               This section may be made read-only after relocations have been applied.
+   .data --> This section holds initialized data that contribute to the program's memory image.
+   .bss --> This section holds data that contributes to the program's memory image.
+            The program may treat this data as uninitialized.
+            However, the system shall initialize this data with zeroes when the
+            program begins to run. The section occupies no file space.
+   .comment --> This section holds version control information.
+   .debug_arange --> ranges for debugging
+   .debug_info --> debugging info elf/compilers
+   .debug_abbrev --> abbreviations for debugging
+   .debug_str --> debugging strings
+
+3. What direction is the stack growing in?
+   If we store the addresses of subsequent stack variables in arr, we can see
+   that arr[i] - arr[i+1] == 48.
+   This means that subsequent stack allocations are occurring at lower address.
+   I.e., the stack is growing down.
+
+4. How large is the stack frame for each recursive call?
+   48 bytes.
+
+5. Where is the heap? What direction is it growing in?
+   The heap is growing UP, since the difference between the first and second mallocs
+   is negative.
+
+6. Are the two malloc()ed memory areas contiguous?
+   (e.g. is there any extra space between their addresses?)
+   There is always difference of 112. Thus, the malloced addresses are contiguous.
+
